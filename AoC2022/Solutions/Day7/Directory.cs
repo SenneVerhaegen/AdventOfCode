@@ -2,8 +2,8 @@ namespace Solutions.Day7;
 
 public class Directory : IFile
 {
-    private readonly Directory? _parent;
-    private readonly string _name;
+    private Directory? _parent;
+    private string _name;
     private readonly Dictionary<string, IFile> _files = new();
 
     public Directory(string name, Directory? parent)
