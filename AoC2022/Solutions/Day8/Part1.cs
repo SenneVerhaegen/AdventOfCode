@@ -1,18 +1,18 @@
 namespace Solutions.Day8;
 
-public class Part1 : ISolution
+public class Part1 : Solution
 {
-    private int _visibleTrees;
-    private int _width;
-    private int _height;
-    private List<string> _trees;
+    private readonly int _visibleTrees;
+    private readonly int _width;
+    private readonly int _height;
+    private readonly List<string> _trees;
 
-    public void Run(bool useTestInput)
+    public Part1(bool useTestInput) : base(useTestInput)
     {
         _trees = Util.GetInput(8, useTestInput).ToList();
 
         _width = _trees[0].Length;
-        _height = _trees.Count();
+        _height = _trees.Count;
 
         _visibleTrees += (2 * _width) + 2 * (_height - 2);
 
@@ -105,8 +105,9 @@ public class Part1 : ISolution
     }
 
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"Visible trees: {_visibleTrees}");
     }
 }

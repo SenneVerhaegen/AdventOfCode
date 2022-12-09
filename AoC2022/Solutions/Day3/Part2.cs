@@ -1,11 +1,11 @@
 ﻿namespace Solutions.Day3;
 
-public class Part2 : ISolution
+public class Part2 : Solution
 {
     private readonly Dictionary<char, int> _priorities = new(26 * 2);
     private int _priority;
 
-    public void Run(bool useTestInput)
+    public Part2(bool useTestInput) : base(useTestInput)
     {
         InitPriorityMappings();
 
@@ -44,8 +44,9 @@ public class Part2 : ISolution
         }
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"Priority: {_priority}");
     }
 }

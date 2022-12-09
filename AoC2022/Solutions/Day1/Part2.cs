@@ -1,10 +1,10 @@
 ﻿namespace Solutions.Day1;
 
-public class Part2 : ISolution
+public class Part2 : Solution
 {
-    private int _topThreeCalories;
+    private readonly int _topThreeCalories;
 
-    public void Run(bool useTestInput)
+    public Part2(bool useTestInput) : base(useTestInput)
     {
         var lines = Util.GetInput(1, useTestInput);
 
@@ -21,8 +21,9 @@ public class Part2 : ISolution
         _topThreeCalories = elvesWithCalories.OrderDescending().Take(3).Sum();
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"The top three elves are carrying {_topThreeCalories} calories.");
     }
 }

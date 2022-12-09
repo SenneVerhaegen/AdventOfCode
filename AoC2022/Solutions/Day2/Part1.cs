@@ -1,8 +1,8 @@
 ﻿namespace Solutions.Day2;
 
-public class Part1 : ISolution
+public class Part1 : Solution
 {
-    private int _myScore;
+    private readonly int _myScore;
 
     private readonly Dictionary<char, int> _scores = new()
     {
@@ -40,7 +40,8 @@ public class Part1 : ISolution
         };
     }
 
-    public void Run(bool useTestInput)
+
+    public Part1(bool useTestInput) : base(useTestInput)
     {
         var games = Util.GetInput(2, useTestInput);
 
@@ -57,8 +58,9 @@ public class Part1 : ISolution
         }
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"My score: {_myScore}");
     }
 }

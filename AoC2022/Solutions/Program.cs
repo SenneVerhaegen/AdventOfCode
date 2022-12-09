@@ -2,26 +2,34 @@
 
 internal static class Program
 {
-    private static readonly Dictionary<(int, int), ISolution> Solutions = new()
+    private static readonly Dictionary<(int, int), Func<bool, Solution>> Solutions = new()
     {
-        { (1, 1), new Day1.Part1() },
-        { (1, 2), new Day1.Part2() },
-        { (2, 1), new Day2.Part1() },
-        { (2, 2), new Day2.Part2() },
-        { (3, 1), new Day3.Part1() },
-        { (3, 2), new Day3.Part2() },
-        { (4, 1), new Day4.Part1() },
-        { (4, 2), new Day4.Part2() },
-        { (5, 1), new Day5.Part1() },
-        { (5, 2), new Day5.Part2() },
-        { (6, 1), new Day6.Part1() },
-        { (6, 2), new Day6.Part2() },
-        { (7, 1), new Day7.Part1() },
-        { (7, 2), new Day7.Part2() },
-        { (8, 1), new Day8.Part1() },
-        { (8, 2), new Day8.Part2() },
-        { (9, 1), new Day9.Part1() },
-        { (9, 2), new Day9.Part2() },
+        { (1, 1), useTestInput => new Day1.Part1(useTestInput) },
+        { (1, 2), useTestInput => new Day1.Part2(useTestInput) },
+        
+        { (2, 1), useTestInput => new Day2.Part1(useTestInput) },
+        { (2, 2), useTestInput => new Day2.Part2(useTestInput) },
+        
+        { (3, 1), useTestInput => new Day3.Part1(useTestInput) },
+        { (3, 2), useTestInput => new Day3.Part2(useTestInput) },
+        
+        { (4, 1), useTestInput => new Day4.Part1(useTestInput) },
+        { (4, 2), useTestInput => new Day4.Part2(useTestInput) },
+        
+        { (5, 1), useTestInput => new Day5.Part1(useTestInput) },
+        { (5, 2), useTestInput => new Day5.Part2(useTestInput) },
+        
+        { (6, 1), useTestInput => new Day6.Part1(useTestInput) },
+        { (6, 2), useTestInput => new Day6.Part2(useTestInput) },
+        
+        { (7, 1), useTestInput => new Day7.Part1(useTestInput) },
+        { (7, 2), useTestInput => new Day7.Part2(useTestInput) },
+        
+        { (8, 1), useTestInput => new Day8.Part1(useTestInput) },
+        { (8, 2), useTestInput => new Day8.Part2(useTestInput) },
+        
+        { (9, 1), useTestInput => new Day9.Part1(useTestInput) },
+        { (9, 2), useTestInput => new Day9.Part2(useTestInput) },
     };
 
     private static void Main(string[] args)
@@ -35,15 +43,15 @@ internal static class Program
             Environment.Exit(1);
         }
 
-        var test = false;
+        var useTestInput = false;
         var day = int.Parse(args[0]);
         var part = int.Parse(args[1]);
 
         if (args.Length == 3 && args[2] == "test")
-            test = true;
+            useTestInput = true;
 
-        var solution = Solutions[(day, part)];
-        solution.Run(test);
+        var action = Solutions[(day, part)];
+        var solution = action.Invoke(useTestInput);
         solution.PrintResult();
     }
 }

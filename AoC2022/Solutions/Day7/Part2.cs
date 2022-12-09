@@ -1,13 +1,13 @@
 namespace Solutions.Day7;
 
-public class Part2 : ISolution
+public class Part2 : Solution
 {
     private int _result;
 
     private const int totalSpace = 70000000;
     private const int neededSpace = 30000000;
 
-    public void Run(bool useTestInput)
+    public Part2(bool useTestInput) : base(useTestInput)
     {
         var terminalHistory = Util.GetInput(7, useTestInput).ToList();
 
@@ -54,8 +54,9 @@ public class Part2 : ISolution
             .Min();
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine(_result);
     }
 }

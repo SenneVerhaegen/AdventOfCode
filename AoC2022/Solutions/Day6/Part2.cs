@@ -1,6 +1,6 @@
 namespace Solutions.Day6;
 
-public class Part2 : ISolution
+public class Part2 : Solution
 {
     const string Test = "mjqjpqmgbljsphdztnvjfqwrcgsmlb";
 
@@ -9,7 +9,7 @@ public class Part2 : ISolution
 
     private int _count;
 
-    public void Run(bool useTestInput)
+    public Part2(bool useTestInput) : base(useTestInput)
     {
         var signal = useTestInput ? Test : Input;
 
@@ -30,8 +30,9 @@ public class Part2 : ISolution
         throw new Exception($"Could not find a string of unique characters with length {substringLength}");
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine(_count);
     }
 }

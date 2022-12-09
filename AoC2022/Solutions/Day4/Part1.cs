@@ -1,10 +1,10 @@
 ﻿namespace Solutions.Day4;
 
-public class Part1 : ISolution
+public class Part1 : Solution
 {
     private int _numberOfContainedRanges;
 
-    public void Run(bool useTestInput)
+    public Part1(bool useTestInput) : base(useTestInput)
     {
         var sectionAssignments = Util.GetInput(4, useTestInput);
 
@@ -45,8 +45,9 @@ public class Part1 : ISolution
         return false;
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"Number of contained ranges: {_numberOfContainedRanges}");
     }
 }

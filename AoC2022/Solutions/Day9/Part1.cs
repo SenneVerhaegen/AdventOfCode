@@ -1,13 +1,13 @@
 ﻿namespace Solutions.Day9;
 
-public class Part1 : ISolution
+public class Part1 : Solution
 {
-    private List<Knot> _knots = new();
-    private Knot _last;
+    private readonly List<Knot> _knots;
+    private readonly Knot _last;
 
     private readonly HashSet<(int, int)> _visitedByTail = new();
 
-    public void Run(bool useTestInput)
+    public Part1(bool useTestInput) : base(useTestInput)
     {
         var moves = Util.GetInput(9, useTestInput);
 
@@ -96,8 +96,9 @@ public class Part1 : ISolution
         return Math.Abs(distX) <= 1 && Math.Abs(distY) <= 1;
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"Tail has visited {_visitedByTail.Count} unique positions.");
     }
 }

@@ -1,12 +1,12 @@
 ﻿namespace Solutions.Day5;
 
-public class Part1 : ISolution
+public class Part1 : Solution
 {
     private string _message = "";
     private int _amountOfStacks;
     private readonly List<Stack<char>> _stacks = new();
 
-    public void Run(bool useTestInput)
+    public Part1(bool useTestInput) : base(useTestInput)
     {
         var input = Util.GetInput(5, useTestInput).ToList();
 
@@ -73,8 +73,9 @@ public class Part1 : ISolution
         }
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"The message is: {_message}");
     }
     

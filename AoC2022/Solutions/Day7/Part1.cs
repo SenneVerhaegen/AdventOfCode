@@ -1,10 +1,10 @@
 namespace Solutions.Day7;
 
-public class Part1 : ISolution
+public class Part1 : Solution
 {
     private int _result;
 
-    public void Run(bool useTestInput)
+    public Part1(bool useTestInput) : base(useTestInput)
     {
         var terminalHistory = Util.GetInput(7, useTestInput).ToList();
 
@@ -48,8 +48,9 @@ public class Part1 : ISolution
             .Sum();
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine(_result);
     }
 }

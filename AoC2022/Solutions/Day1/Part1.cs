@@ -1,10 +1,10 @@
 ﻿namespace Solutions.Day1;
 
-public class Part1 : ISolution
+public class Part1 : Solution
 {
-    private int _maxCalories;
+    private readonly int _maxCalories;
 
-    public void Run(bool useTestInput)
+    public Part1(bool useTestInput) : base(useTestInput)
     {
         var lines = Util.GetInput(1, useTestInput);
 
@@ -21,8 +21,9 @@ public class Part1 : ISolution
         _maxCalories = elvesWithCalories.Max();
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"The elf carrying the most calories is carrying {_maxCalories} calories");
     }
 }

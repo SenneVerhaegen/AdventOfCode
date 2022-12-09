@@ -1,14 +1,14 @@
 namespace Solutions.Day8;
 
-public class Part2 : ISolution
+public class Part2 : Solution
 {
-    private int _width;
-    private int _height;
-    private List<string> _input;
-    private Tree[,] _trees;
-    private int _highestScenicScore = 0;
+    private readonly int _width;
+    private readonly int _height;
+    private readonly List<string> _input;
+    private readonly Tree[,] _trees;
+    private readonly int _highestScenicScore;
 
-    public void Run(bool useTestInput)
+    public Part2(bool useTestInput) : base(useTestInput)
     {
         _input = Util.GetInput(8, useTestInput).ToList();
 
@@ -90,8 +90,9 @@ public class Part2 : ISolution
         return (int)char.GetNumericValue(_input[row][col]);
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"Highest scenic score: {_highestScenicScore}");
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Solutions.Day2;
 
-public class Part2 : ISolution
+public class Part2 : Solution
 {
     private int _myScore;
 
@@ -60,7 +60,7 @@ public class Part2 : ISolution
         };
     }
 
-    public void Run(bool useTestInput)
+    public Part2(bool useTestInput) : base(useTestInput)
     {
         var games = Util.GetInput(2, useTestInput);
 
@@ -77,8 +77,9 @@ public class Part2 : ISolution
         }
     }
 
-    public void PrintResult()
+    public override void PrintResult()
     {
+        base.PrintResult();
         Console.WriteLine($"My score: {_myScore}");
     }
 }
