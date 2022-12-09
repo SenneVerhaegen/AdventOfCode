@@ -20,6 +20,8 @@ internal static class Program
         { (7, 2), new Day7.Part2() },
         { (8, 1), new Day8.Part1() },
         { (8, 2), new Day8.Part2() },
+        { (9, 1), new Day9.Part1() },
+        { (9, 2), new Day9.Part2() },
     };
 
     private static void Main(string[] args)
