@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Solutions.Day11;
+﻿namespace Solutions.Day11;
 
 public class Item
 {

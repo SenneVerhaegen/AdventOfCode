@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Solutions.Day11;
+﻿namespace Solutions.Day11;
 
 public class Monkey
 {
@@ -51,36 +49,22 @@ public class Monkey
         previous.WorryLevel = newValue % (ulong)divisor;
     }
 
-    private bool IsPrime()
-    {
-        return _items.Peek().WorryLevel % (ulong)TestValue == 0;
-    }
+    private bool IsPrime() => _items.Peek().WorryLevel % (ulong)TestValue == 0;
 
-    private void DivideWorryLevel()
-    {
-        _items.Peek().WorryLevel /= 3;
-    }
+    private void DivideWorryLevel() => _items.Peek().WorryLevel /= 3;
 
-    public void ReceiveItem(Item item)
-    {
-        _items.Enqueue(item);
-    }
+    public void ReceiveItem(Item item) => _items.Enqueue(item);
 
-    public Item ThrowItem()
-    {
-        return _items.Dequeue();
-    }
+    public Item ThrowItem() => _items.Dequeue();
 
-    public int GetReceiverIndex()
-    {
-        return IsPrime() ? _trueMonkey : _falseMonkey;
-    }
+    public int GetReceiverIndex() => IsPrime() ? _trueMonkey : _falseMonkey;
 
     public int ItemCount() => _items.Count;
 
     public void PrintItems()
     {
         if (_items.Count == 0) return;
+        
         foreach (var item in _items)
         {
             Console.Write($"{item.WorryLevel}, ");

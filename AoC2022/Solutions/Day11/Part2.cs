@@ -33,7 +33,7 @@ public class Part2 : Solution
             monkeys.Add(monkey);
         }
 
-        var divisor = monkeys.Aggregate(1, (a, m) => a * m.TestValue);
+        var lcm = monkeys.Aggregate(1, (a, m) => a * m.TestValue);
 
         for (var rounds = 1; rounds <= 10000; rounds++)
         {
@@ -42,7 +42,7 @@ public class Part2 : Solution
                 var count = monkey.ItemCount();
                 for (var i = 0; i < count; i++)
                 {
-                    monkey.InspectPart2(divisor);
+                    monkey.InspectPart2(lcm);
                     var receiver = monkeys[monkey.GetReceiverIndex()];
                     receiver.ReceiveItem(monkey.ThrowItem());
                 }
