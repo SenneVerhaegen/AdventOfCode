@@ -2,7 +2,7 @@
 
 namespace Solutions.Day14;
 
-public class Cave
+public class Cave2
 {
     private readonly char[,] _tiles;
     private readonly int _width;
@@ -14,10 +14,10 @@ public class Cave
 
     public int UnitsOfSandAtRest { get; private set; }
 
-    public Cave(int minX, int maxX, int maxY)
+    public Cave2(int minX, int maxX, int maxY)
     {
         _minX = minX;
-        _width = maxX - minX + 1;
+        _width = maxX;
         _height = maxY + 1;
         _tiles = new char[_height, _width];
 
@@ -67,11 +67,6 @@ public class Cave
                 continue;
             }
 
-            // The tile below is blocked we want to look to the left.
-            // However, if x -1 < 0, we are out of bounds meaning the sand will fall into the abyss.
-            if (x - 1 < 0)
-                return null;
-            
             if (!IsBlocked(y + 1, x - 1))
             {
                 // The tile diagonally left is not blocked so we continue searching.

@@ -1,10 +1,9 @@
 ﻿namespace Solutions.Day14;
 
-public class Part1 : Solution
+public class Part2 : Solution
 {
-    private readonly Cave _cave;
-
-    public Part1(bool useTestInput) : base(useTestInput)
+    private readonly Cave2 _cave;
+    public Part2(bool useTestInput) : base(useTestInput)
     {
         var input = Util.GetInput(14, useTestInput).ToList();
 
@@ -14,11 +13,11 @@ public class Part1 : Solution
             return (coordinates[1], coordinates[0]);
         }).ToList();
 
-        var minX = tuples.Select(t => t.Item2).Min();
-        var maxX = tuples.Select(t => t.Item2).Max();
-        var maxY = tuples.Select(t => t.Item1).Max();
+        var minX = 0;
+        var maxX = tuples.Select(t => t.Item2).Max() * 2;
+        var maxY = tuples.Select(t => t.Item1).Max() + 2; // Add 2 for the new ground in part 2
 
-        _cave = new Cave(minX, maxX, maxY);
+        _cave = new Cave2(minX, maxX, maxY);
 
         foreach (var coordinates in input.Select(line => line.Split(" -> ").ToList()))
         {
@@ -30,6 +29,9 @@ public class Part1 : Solution
             }
         }
 
+        // Place an 'infinite' line at the bottom
+        _cave.PlaceRocks(maxY, minX, maxY, maxX - 1);
+
         _cave.FillWithSand();
     }
 
@@ -37,6 +39,6 @@ public class Part1 : Solution
     {
         base.PrintResult();
 
-        Console.WriteLine($"{_cave.UnitsOfSandAtRest} units of sand have come to rest before the sand starts flowing into the abyss.");
+        Console.WriteLine($"{_cave.UnitsOfSandAtRest} units of sand have come to rest.");
     }
 }

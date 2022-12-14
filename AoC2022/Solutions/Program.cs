@@ -43,6 +43,7 @@ internal static class Program
         { (13, 1), useTestInput => new Day13.Part1(useTestInput) },
         
         { (14, 1), useTestInput => new Day14.Part1(useTestInput) },
+        { (14, 2), useTestInput => new Day14.Part2(useTestInput) },
     };
 
     private static void Main(string[] args)
