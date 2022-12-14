@@ -41,6 +41,7 @@ internal static class Program
         { (12, 2), useTestInput => new Day12.Part2(useTestInput) },
         
         { (13, 1), useTestInput => new Day13.Part1(useTestInput) },
+        { (13, 2), useTestInput => new Day13.Part2(useTestInput) },
         
         { (14, 1), useTestInput => new Day14.Part1(useTestInput) },
         { (14, 2), useTestInput => new Day14.Part2(useTestInput) },

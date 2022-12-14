@@ -1,16 +1,15 @@
 namespace Solutions.Day13;
 
-public class Part1 : Solution
+public class Part2 : Solution
 {
-    private readonly int _sum;
-
-    public Part1(bool useTestInput) : base(useTestInput)
+    private readonly int _decoderKey = 1;
+    public Part2(bool useTestInput) : base(useTestInput)
     {
-        var solutions = new List<bool>();
-
+        var packets = new SortedSet<Node>();
+        
         var input = Util.GetInput(13, useTestInput).ToList();
 
-        for (var i = 0; i < input.Count; i += 3)
+        for (var i = 0; i < input.Count ; i += 3)
         {
             var packetLeft = input[i];
             packetLeft = packetLeft.Substring(1, packetLeft.Length - 2);
@@ -21,21 +20,43 @@ public class Part1 : Solution
             var left = CreateTree(packetLeft);
             var right = CreateTree(packetRight);
 
-            switch (left.CompareTo(right))
-            {
-                case -1:
-                case 0:
-                    solutions.Add(true);
-                    break;
-                case 1:
-                    solutions.Add(false);
-                    break;
-            }
+            packets.Add(left);
+            packets.Add(right);
         }
 
-        for (var i = 0; i < solutions.Count; i++)
-            if (solutions[i])
-                _sum += i + 1;
+        var sp1 = StartPacket1();
+        var sp2 = StartPacket2();
+        packets.Add(sp1);
+        packets.Add(sp2);
+
+        var packetsList = packets.ToList();
+        for (var i = 0; i < packetsList.Count; i++)
+        {
+            var packet = packetsList[i].ToString();
+            
+            if (sp1.ToString() == packet)
+                _decoderKey *= i+1;
+            if (sp2.ToString() == packet)
+                _decoderKey *= i+1;
+        }
+    }
+
+    private static Node StartPacket1()
+    {
+        var node = new Node();
+        var n = new Node();
+        n.AddChild(2, 0);
+        node.AddChild(n,0);
+        return node;
+    }
+    
+    private static Node StartPacket2()
+    {
+        var node = new Node();
+        var n = new Node();
+        n.AddChild(6, 0);
+        node.AddChild(n,0);
+        return node;
     }
 
     private static Node CreateTree(string content)
@@ -54,6 +75,7 @@ public class Part1 : Solution
             }
             else if (c == ']')
             {
+                
                 depth--;
                 charIndex++;
             }
@@ -66,7 +88,7 @@ public class Part1 : Solution
                 var value = int.Parse(valueStr);
                 var node = new Node(value);
                 root.AddChild(node, depth);
-
+                
                 charIndex += valueStr.Length;
             }
         }
@@ -78,6 +100,6 @@ public class Part1 : Solution
     {
         base.PrintResult();
 
-        Console.WriteLine($"Sum {_sum}");
+        Console.WriteLine($"Decoder key: {_decoderKey}");
     }
 }
