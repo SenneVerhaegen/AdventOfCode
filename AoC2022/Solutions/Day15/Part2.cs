@@ -2,22 +2,32 @@ namespace Solutions.Day15;
 
 public class Part2 : Solution
 {
-    private readonly int _answer;
+    private readonly long _answer;
 
-    // const int Max = 20;
-    private const int Max = 4000000;
     private const int Min = 0;
+    private readonly int _max;
+
+    private readonly HashSet<Point> _sensorRangeEnclosingPoints = new();
+    private readonly HashSet<Point> _possibleSolutions = new();
+    private readonly Dictionary<Point, int> _sensorToBeaconDistances = new();
+    private readonly List<Point> _sensors = new();
 
     public Part2(bool useTestInput) : base(useTestInput)
     {
         var input = Util.GetInput(15, useTestInput);
 
-        var sensorDistances = new Dictionary<Point, int>();
-        var sensors = new List<Point>();
-        var possiblePoints = new List<Point>();
+        _max = useTestInput ? 20 : 4_000_000;
 
-        var solutions = new HashSet<Point>();
+        Parse(input);
+        AddPossibleSolutions();
+        RemoveNonSolutions();
 
+        var solution = _possibleSolutions.First();
+        _answer = (long)(solution.X * 4_000_000) + solution.Y;
+    }
+
+    private void Parse(IEnumerable<string> input)
+    {
         foreach (var line in input)
         {
             var parts = line.Split(" ").ToList();
@@ -30,84 +40,68 @@ public class Part2 : Solution
             var beaconY = int.Parse(parts[9].Split("=")[1]);
             var beacon = new Point(beaconX, beaconY);
 
-            sensors.Add(sensor);
+            _sensors.Add(sensor);
 
             // Distance to shortest beacon
             var d = sensor.DistanceTo(beacon);
-            sensorDistances[sensor] = d;
+            _sensorToBeaconDistances[sensor] = d;
 
-            possiblePoints.AddRange(PointsAtDistance(sensor, d + 1));
+            // Calculate the points right outside the boundary of the distance from sensor to its closest beacon
+            // and add it to the possible solutions
+            AddPointsAtDistance(sensor, d + 1);
         }
+    }
 
-
-        foreach (var possiblePoint in possiblePoints)
+    private void RemoveNonSolutions()
+    {
+        _possibleSolutions.RemoveWhere(p => _sensors.Any(sensor =>
         {
-            foreach (var sensor in sensors)
+            var d1 = _sensorToBeaconDistances[sensor];
+            var d2 = sensor.DistanceTo(p);
+            var diff = d2 - d1;
+            return diff < 1;
+        }));
+
+        // Make sure the solutions are within bounds
+        _possibleSolutions.RemoveWhere(p => p.X < Min || p.X > _max || p.Y < Min || p.Y > _max);
+    }
+
+    private void AddPossibleSolutions()
+    {
+        foreach (var point in _sensorRangeEnclosingPoints)
+        {
+            foreach (var sensor in _sensors)
             {
-                var d1 = sensorDistances[sensor];
-                var d2 = sensor.DistanceTo(possiblePoint);
+                var d1 = _sensorToBeaconDistances[sensor];
+                var d2 = sensor.DistanceTo(point);
                 var diff = d2 - d1;
 
                 if (diff == 1)
-                    solutions.Add(possiblePoint);
+                    _possibleSolutions.Add(point);
             }
         }
-
-        foreach (var possiblePoint in possiblePoints)
-        {
-            foreach (var sensor in sensors)
-            {
-                var d1 = sensorDistances[sensor];
-                var d2 = sensor.DistanceTo(possiblePoint);
-                var diff = d2 - d1;
-
-                if (diff < 1)
-                    solutions.Remove(possiblePoint);
-            }
-        }
-
-        // Make sure the solutions are within bounds
-        solutions.RemoveWhere(p => p.X is < Min or > Max || p.Y is < Min or > Max);
-
-        foreach (var solution in solutions)
-        {
-            Console.WriteLine(solution);
-        }
-
-        Console.WriteLine($"Count {solutions.Count}");
-
-        var sourceBeacon = solutions.First();
-        _answer = sourceBeacon.X * 4000000 + sourceBeacon.Y;
     }
 
-    private IEnumerable<Point> PointsAtDistance(Point point, int distance)
+    private void AddPointsAtDistance(Point point, int distance)
     {
-        distance = Math.Min(distance, Max);
-
         Console.WriteLine($"Distance: {distance}");
 
-        var points = new HashSet<Point>();
-
-        var bound = point.X + distance;
+        var bound = Math.Min(point.X + distance, _max);
         for (var x = point.X; x <= bound; x++)
         {
             var y = bound - x;
 
-            points.Add(new Point(x, -y + point.Y));
-            points.Add(new Point(x, y + point.Y));
+            _sensorRangeEnclosingPoints.Add(new Point(x, -y + point.Y));
+            _sensorRangeEnclosingPoints.Add(new Point(x, y + point.Y));
         }
 
         for (var x = point.X; x >= 0; x--)
         {
             var y = -x;
 
-            points.Add(new Point(x, -y + point.Y));
-            points.Add(new Point(x, y + point.Y));
+            _sensorRangeEnclosingPoints.Add(new Point(x, -y + point.Y));
+            _sensorRangeEnclosingPoints.Add(new Point(x, y + point.Y));
         }
-
-        Console.WriteLine($"Points generated: {points.Count}");
-
-        return points;
     }
 
     public override void PrintResult()
