@@ -19,7 +19,7 @@ public class Part1 : Solution
 
     public Part1(bool useTestInput) : base(useTestInput)
     {
-        // Helpers.InitializeHelperGrid(_grid);
+        Helpers.InitializeHelperGrid(_grid);
 
         var input = Util.GetInput(17, useTestInput).ToList()[0];
         _jets = new RingQueue<char>(input);
@@ -60,7 +60,7 @@ public class Part1 : Solution
 
             rock.RestorePosition();
             positions = rock.GetPositions();
-            // Helpers.PrintStep(_grid, positions, _maxY, true);
+            Helpers.PrintStep(_grid, positions, _maxY, true, false);
 
             foreach (var position in positions)
                 _blockedPositions.Add(position);
@@ -104,6 +104,7 @@ public class Part1 : Solution
     public override void PrintResult()
     {
         base.PrintResult();
+        // Helpers.Print(_grid, 1000);
 
         Console.WriteLine($"Tower is {_maxY + 1} units tall");
     }

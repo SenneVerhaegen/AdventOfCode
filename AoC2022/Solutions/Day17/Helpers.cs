@@ -2,11 +2,13 @@
 
 public static class Helpers
 {
-    public static void PrintStep(string[,] grid, List<(int, int)> positions, int maxY, bool rest = false)
+    public static void PrintStep(string[,] grid, List<(int, int)> positions, int maxY, bool rest = false, bool removePositions = true)
     {
         AddPositionsToGrid(positions, grid, rest);
         Print(grid, maxY);
-        RemovePositionsFromGrid(positions, grid);
+        
+        if(removePositions)
+            RemovePositionsFromGrid(positions, grid);
     }
 
     public static void InitializeHelperGrid(string[,] grid)
@@ -37,7 +39,7 @@ public static class Helpers
         }
     }
 
-    private static void Print(string[,] grid, int maxY)
+    public static void Print(string[,] grid, int maxY)
     {
         var bound = maxY + 3 + 4;
         for (var row = bound; row >= 0; row--)
